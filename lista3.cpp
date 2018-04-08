@@ -19,7 +19,7 @@ void quick_sort (int *array, int inicio, int fim){
 
     pivo = array[meio];
 
-    do{
+    while(i<=j){
         while (array[i]<pivo)
             i++;
         while (array[j]>pivo)
@@ -35,7 +35,7 @@ void quick_sort (int *array, int inicio, int fim){
         }
 
 
-    } while (i < j);
+    }
 
     if (inicio < j)
         quick_sort(array,inicio,j);
@@ -96,12 +96,25 @@ int main(){
   cout << "Tamanho do vetor" << endl;
   cin >> aux;
 
-  int vetor[aux];
+  int vetor[aux],vetor2[aux];
 
   srand((unsigned)time(NULL));
   for (int i=0; i < aux; i++){
     vetor[i] = rand()%100000;
+    vetor2[i] = vetor[i];
   }
+
+  cout << endl;
+
+  if(aux <= 20){
+    cout << "Vetor desordenado = " << endl;
+    for (size_t i = 0; i < aux; i++) {
+        cout << vetor[i] << " ";
+    }
+    cout << endl;
+  }
+
+  cout << endl;
 
   getrusage(RUSAGE_SELF, &tempo_inicial);
     quick_sort(vetor,0,aux);
@@ -109,7 +122,7 @@ int main(){
   tempo = calcula_tempo(&tempo_inicial, &tempo_final);
 
   getrusage(RUSAGE_SELF, &tempo_inicial);
-    heap_sort(vetor,aux);
+    heap_sort(vetor2,aux);
   getrusage(RUSAGE_SELF, &tempo_final);
   tempo2 = calcula_tempo(&tempo_inicial, &tempo_final);
 
@@ -117,11 +130,13 @@ int main(){
   if(aux <= 20){
     cout << "Vetor ordenado = " << endl;
     for (size_t i = 0; i < aux; i++) {
-        cout << vetor[i] << " ";
+        cout << vetor2[i] << " ";
     }
     cout << endl;
   }
 
+  cout << endl;
+  
   printf("Tempo Quick Sort: %lf\n",tempo);
   printf("Tempo Heap Sort: %lf\n",tempo2);
 
